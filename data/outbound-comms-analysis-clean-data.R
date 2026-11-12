@@ -2,8 +2,8 @@
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
 # This script builds the clean data for the Outbound Comms app. It writes:
-#   - misc/outbound-clean-data.csv  (plain CSV, kept for other consumers)
-#   - misc/outbound-clean-data.rds  (typed bundle the app loads fast: the full
+#   - data/outbound-clean-data.csv  (plain CSV, kept for other consumers)
+#   - data/outbound-clean-data.rds  (typed bundle the app loads fast: the full
 #     dataset + the CQS exclusion list + a build timestamp)
 # Author: Filippos Polyzos
 #
@@ -276,7 +276,7 @@ clean_outbound_data = raw_outbound_data %>%
 
 # Plain CSV - kept for any other consumer / the Download-the-raw use. The app no
 # longer reads this; it reads the .rds below.
-write_csv(clean_outbound_data, "misc/outbound-clean-data.csv")
+write_csv(clean_outbound_data, "data/outbound-clean-data.csv")
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #' [ =============== DATA-QUALITY GUARD =============== ]
@@ -393,6 +393,6 @@ saveRDS(
     cqs      = exclusion_cqs_ids,
     built_at = Sys.time()
   ),
-  "misc/outbound-clean-data.rds"
+  "data/outbound-clean-data.rds"
 )
-message("Wrote misc/outbound-clean-data.rds")
+message("Wrote data/outbound-clean-data.rds")
