@@ -6,6 +6,7 @@
     <td valign="middle">
       <h1>Outbound Comms Analysis</h1>
       <img src="https://img.shields.io/github/last-commit/filippospol/outbound-app" alt="Last commit" />
+      <img src="https://github.com/filippospol/outbound-app/actions/workflows/outbound-comms-analysis-data.yml/badge.svg" alt="Pipeline status" />
     </td>
   </tr>
 </table>
