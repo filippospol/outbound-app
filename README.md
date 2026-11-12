@@ -15,4 +15,4 @@ Outbound App is where the Outbound team's call logs turn into answers. An R Shin
 
 ## License
 
-GPL-3.0, see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
