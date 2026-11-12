@@ -48,3 +48,6 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# GitHub PAT used by the app's Rebuild button - must NEVER be committed
+gh_token.txt
