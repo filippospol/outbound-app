@@ -2,7 +2,7 @@ name: Outbound Comms Analysis - Clean Data
 
 on:
   schedule:
-    - cron: '15 18 * * *'
+    - cron: '15 10 * * *'
   workflow_dispatch:
 
 jobs:
@@ -28,19 +28,19 @@ jobs:
       - name: Data Cleaner
         id: clean
         continue-on-error: true
-        run: Rscript misc/outbound-comms-analysis-clean-data.R
+        run: Rscript data/outbound-comms-analysis-clean-data.R
 
       - name: Debug - List Files
         run: |
           echo "Files in root:"
           ls -l *.csv || echo "No CSVs in root"
           echo "Files in data folder:"
-          ls -R misc/
+          ls -R data/
           # The app now loads the .rds bundle, so confirm it was produced.
-          if [ -f misc/outbound-clean-data.rds ]; then
-            echo "OK: misc/outbound-clean-data.rds exists ($(du -h misc/outbound-clean-data.rds | cut -f1))"
+          if [ -f data/outbound-clean-data.rds ]; then
+            echo "OK: data/outbound-clean-data.rds exists ($(du -h data/outbound-clean-data.rds | cut -f1))"
           else
-            echo "WARNING: misc/outbound-clean-data.rds is MISSING — the app will keep loading the previous bundle"
+            echo "WARNING: data/outbound-clean-data.rds is MISSING — the app will keep loading the previous bundle"
           fi
 
       - name: Commit and Push
@@ -64,7 +64,7 @@ jobs:
         run: |
           Rscript - <<'RS'
           suppressMessages({library(readr); library(dplyr); library(lubridate)})
-          f  <- "misc/outbound-clean-data.csv"
+          f  <- "data/outbound-clean-data.csv"
           sm <- Sys.getenv("GITHUB_STEP_SUMMARY")
           add <- function(x = "") cat(x, "\n", sep = "", file = sm, append = TRUE)
           add(paste0("## Outbound clean-data — ", format(Sys.Date(), "%Y-%m-%d")))
@@ -91,7 +91,7 @@ jobs:
           add(paste0("| Latest call | ",
                      if (is.finite(latest)) format(latest, "%d %b %Y") else "-", " |"))
           add(paste0("| RDS bundle | ",
-                     if (file.exists("misc/outbound-clean-data.rds")) "✅ written" else "❌ missing", " |"))
+                     if (file.exists("data/outbound-clean-data.rds")) "✅ written" else "❌ missing", " |"))
           add()
           add("### Rows per campaign (top 15)")
           add("| Campaign | Rows |")
